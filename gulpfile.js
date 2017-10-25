@@ -27,10 +27,10 @@ var uglify = require('gulp-uglify-es').default;
 gulp.task("uglify", function () {
    return gulp.src("server.js")
        .pipe(uglify(/* options */))
-       .pipe(gulp.dest("serverminify.js"));
+       .pipe(gulp.dest("gulpminification"));
 });
 gulp.task("uglifyy", function () {
     return gulp.src("test.js")
         .pipe(uglify(/* options */))
-        .pipe(gulp.dest("serverminify.js"));
+        .pipe(gulp.dest("gulpminification"));
  });
