@@ -69,7 +69,7 @@ sequelize
     console.log('An error occurred while creating the table:', err);
   });
   
-
+//inserting the data into database
 sequelize.sync({ force: true }).then(function () {
    Birds.create({
   id:'1',
@@ -87,6 +87,7 @@ sequelize.sync({ force: true }).then(function () {
   var express = require('express'),
 bodyParser = require('body-parser');
 
+//Performing get API
 
 app.get('/',function(req,res){
   res.send("hello");
@@ -109,6 +110,7 @@ app.get('/',function(req,res){
   });
 });
 
+//performing post api
 
 app.post('/Postbird',function(req,res){
     var id = req.body.id;
@@ -142,6 +144,7 @@ res.status(400).json(data);
     }
 });
 
+//Performing put api
 
 app.put('/Putbird', function(req,res){
   
@@ -168,6 +171,7 @@ app.put('/Putbird', function(req,res){
       
   }
   });
+//Performing delete api
 
 app.delete('/Deletebird', function(req,res){
   

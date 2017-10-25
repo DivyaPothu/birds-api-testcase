@@ -1,37 +1,36 @@
 // including plugins
 var gulp = require('gulp')
 , jshint = require("gulp-jshint");
- 
-// task
+var uglify = require("gulp-uglify"); 
 
+//Performing jsLinting
 gulp.task('jsLint', function () {
-    gulp.src('server.js')
+gulp.src('server.js')
     gulp.src('test.js') // path to your files
     .pipe(jshint())
     .pipe(jshint.reporter()); // Dump results
 });
 
-/*gulp.task('watch', function() {
-    gulp.watch("server.js", ["lint"]);
-});*/
-var useref = require('gulp-useref');
-var uglify = require('gulp-uglify');
-var gulpIf = require('gulp-if');
+ 
+// task
+/*gulp.task('minify-js', function () {
+    gulp.src('server.js') // path to your files
+    .pipe(uglify())
+    .pipe(gulp.dest('servermini.js'));
+})*/
 
-gulp.task('useref', function(){
-  return gulp.src('server.js')
-    .pipe(useref())
-    // Minifies only if it's a JavaScript file
-    .pipe(gulpIf('*.js', uglify()))
-    .pipe(gulp.dest('server1.js'))
+
+//Performing js minification
+
+var uglify = require('gulp-uglify-es').default;
+
+gulp.task("uglify", function () {
+   return gulp.src("server.js")
+       .pipe(uglify(/* options */))
+       .pipe(gulp.dest("serverminify.js"));
 });
-var pump = require('pump');
-gulp.task('compress', function (cb) {
-  pump([
-        gulp.src('server.js'),
-        uglify(),
-        gulp.dest('server1.js')
-    ],
-    cb
-  );
-});
+gulp.task("uglifyy", function () {
+    return gulp.src("test.js")
+        .pipe(uglify(/* options */))
+        .pipe(gulp.dest("serverminify.js"));
+ });
