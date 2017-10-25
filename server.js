@@ -1,5 +1,6 @@
 
-const pg = require('pg');
+/*jshint esversion: 6 */
+var pg = require('pg');
 var Sequelize=require ('sequelize');
 var app  = require('express')();// Express App include
 var http = require('http').Server(app); // http server
@@ -23,8 +24,7 @@ var sequelize = new Sequelize('ddoekvsmvbt4bm', 'fnykiielutjcbx', '25236de90eda0
     DATABASE_URL:'postgres://fnykiielutjcbx:25236de90eda0295f5f26480a2a5686ce817d6bc8f7b3e88ac0c9809367a42cd@ec2-54-235-90-107.compute-1.amazonaws.com:5432/ddoekvsmvbt4bm'
 });
 sequelize
-  .authenticate()
-  .then(() => {
+  .authenticate().then(() => {
     console.log('Connection has been established successfully.');
   })
   .catch(err => {
@@ -80,7 +80,7 @@ sequelize.sync({ force: true }).then(function () {
   visible:'true'
   }).then(function(){
   console.log('Data successfully inserted');
-  })
+  });
 });
 
  
@@ -101,9 +101,9 @@ app.get('/',function(req,res){
     //if(rows.length!=0){
     if(Birds){
     
-            data["Data"] = Birds;
+            data.Data = Birds;
             // data["Data"] = rows;
-            res.json({"err" : false, "message" : "success",data});
+            res.json(data);
            // res.json(data);
         }
   });
@@ -128,15 +128,15 @@ app.post('/Postbird',function(req,res){
 sequelize.query("INSERT INTO bird_tables (id,name,family,continents,added,visible) VALUES('" + id+ "','" + name+ "','" + family + "','" + continents+ "','" + added+ "','" + visible+ "')",[id,name,family,continents,added,visible],{type: sequelize.QueryTypes.INSERT}).then(function(Birds,err) {
     
  if(!!err){
-                data["Data"] = "Error Adding data";
+                data.Data = "Error Adding data";
             }else{
                 //data["Data"] = 0;
-                data["Data"] = "Bird Added Successfully";
+                data.Data = "Bird Added Successfully";
             }
             res.json(data);
         });
     }else{
-        data["Data"] = "Please provide all required data of bird";
+        data.Data = "Please provide all required data of bird";
         //res.json(404).data);
 res.status(400).json(data);
     }
@@ -156,14 +156,14 @@ app.put('/Putbird', function(req,res){
   sequelize.query("UPDATE bird_tables set name= '"+name+"' where id= '"+id+"' ",[id,name],{type: sequelize.QueryTypes.UPDATE}).then(function(Birds,err) {
       
    if(!!err){
-                  data["Data"] = "Error Adding data";
+                  data.Data = "Error Adding data";
               }else{
-                  data["Data"] = "Bird Updated Successfully";
+                  data.Data = "Bird Updated Successfully";
               }
               res.json(data);
           });
       }else{
-          data["Data"] = "Please provide all required data of bird";
+          data.Data = "Please provide all required data of bird";
           res.status(404).json(data);
       
   }
@@ -182,14 +182,14 @@ app.delete('/Deletebird', function(req,res){
   sequelize.query("DELETE from  bird_tables where id= '"+id+"' ",[id],{type: sequelize.QueryTypes.DELETE}).then(function(Birds,err) {
       
    if(!!err){
-                  data["Data"] = "Error Adding data";
+                  data.Data = "Error Adding data";
               }else{
-                  data["Data"] = "Bird Deleted Successfully";
+                  data.Data = "Bird Deleted Successfully";
               }
               res.json(data);
           });
       }else{
-          data["Data"] = "Please provide all required data of bird";
+          data.Data = "Please provide all required data of bird";
           res.status(404).json(data);
     
       
